@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tentang</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-brand">Validator Hex Color (DFA)</div>
+    <nav class="navbar-links">
+      <a href="{{ url_for('index') }}">Beranda</a>
+      <a href="{{ url_for('dataset') }}">Dataset & Pengujian</a>
+      <a href="{{ url_for('cara_pakai') }}">Cara Penggunaan</a>
+      <a href="{{ url_for('tentang') }}">Tentang</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Tentang Proyek Ini</h1>
+    </section>
+
+    <section class="panel">
+      <h2>Latar Belakang</h2>
+      <p>
+        Kode warna hexadecimal (#RRGGBB) banyak digunakan dalam pengembangan web, desain
+        antarmuka, dan pengolahan gambar digital. Kesalahan format kode warna  misalnya
+        jumlah digit yang kurang atau karakter yang tidak valid  dapat menyebabkan
+        tampilan tidak sesuai atau bahkan program mengalami error. Studi kasus ini mengangkat
+        permasalahan tersebut sebagai penerapan konsep Deterministic Finite Automaton (DFA)
+        untuk memvalidasi format string secara otomatis.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Tujuan Aplikasi</h2>
+      <ul class="langkah">
+        <li>Menerapkan konsep DFA untuk memvalidasi format kode warna hexadecimal secara real-time.</li>
+        <li>Memvisualisasikan cara kerja DFA melalui diagram state interaktif, sehingga konsep otomata lebih mudah dipahami secara visual.</li>
+        <li>Menguji keandalan DFA menggunakan dataset nyata yang berisi ribuan kode warna.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Teknologi yang Digunakan</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Komponen</th><th>Teknologi</th></tr></thead>
+          <tbody>
+            <tr><td>Backend</td><td>Python, Flask</td></tr>
+            <tr><td>Frontend</td><td>HTML, CSS, JavaScript</td></tr>
+            <tr><td>Visualisasi grafik</td><td>Chart.js</td></tr>
+            <tr><td>Dataset</td><td>Color Names Dataset (Kaggle)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Informasi Penulis</h2>
+      <p><strong>Nama:</strong> Selsa Shafana Alfiyani</p>
+      <p><strong>NIM:</strong> 301240041</p>
+      <p><strong>Program Studi:</strong> Teknik Informatika</p>
+      <p><strong>Mata Kuliah:</strong> Teori Bahasa dan Otomata</p>
+      <p><strong>Semester:</strong> 4</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Proyek UAS Teori Bahasa dan Otomata  Implementasi DFA untuk Validasi Format Kode Warna Hexadecimal</p>
+  </footer>
+</body>
+</html>
