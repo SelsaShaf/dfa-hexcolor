@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dataset & Pengujian</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-brand">Validator Hex Color (DFA)</div>
+    <nav class="navbar-links">
+      <a href="{{ url_for('index') }}">Beranda</a>
+      <a href="{{ url_for('dataset') }}">Dataset & Pengujian</a>
+      <a href="{{ url_for('cara_pakai') }}">Cara Penggunaan</a>
+      <a href="{{ url_for('tentang') }}">Tentang</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Dataset & Pengujian Otomatis</h1>
+      <p>Dataset berisi {{ total }} data nama warna beserta kode hex-nya, digunakan sebagai
+         data uji untuk membuktikan bahwa DFA yang dibangun bekerja dengan benar pada data nyata.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Hasil Pengujian</h2>
+      <p class="keterangan">
+        Pengujian berjalan otomatis begitu halaman ini dibuka, menjalankan DFA terhadap
+        seluruh data uji (data asli dan data yang sengaja dimodifikasi formatnya).
+      </p>
+
+      <div id="hasil-uji" class="hasil-uji">
+        <div class="stat-grid">
+          <div class="stat-card"><span id="stat-total">-</span><label>Total data</label></div>
+          <div class="stat-card"><span id="stat-valid">-</span><label>Valid</label></div>
+          <div class="stat-card"><span id="stat-invalid">-</span><label>Tidak valid</label></div>
+        </div>
+        <canvas id="chart-hasil" height="110"></canvas>
+      </div>
+
+      <button id="btn-uji" class="btn-primer" style="margin-top:1.2rem">Jalankan Ulang Pengujian</button>
+    </section>
+
+    <section class="panel">
+      <h2>Tentang Dataset</h2>
+      <p>
+        Dataset yang digunakan berisi {{ total }} nama warna beserta representasi kode hex,
+        RGB, dan HSL/HSV masing-masing. Setiap baris data mewakili satu warna dengan kode hex
+        yang sudah pasti valid, sehingga cocok dijadikan sebagai contoh data positif (kasus valid).
+      </p>
+      <p>
+        Karena DFA juga harus mampu menolak string yang tidak sesuai format, sebagian data
+        (sekitar 15%) sengaja dimodifikasi formatnya secara acak, lalu dijadikan contoh data
+        negatif (kasus tidak valid).
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Cuplikan Dataset</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Nama Warna</th><th>Kode Hex</th></tr>
+          </thead>
+          <tbody>
+            {% for c in preview %}
+            <tr>
+              <td>{{ c.name }}</td>
+              <td><span class="swatch" style="background:{{ c.hex }}"></span> {{ c.hex }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p class="keterangan">Menampilkan 50 dari {{ total }} data.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Proyek UAS Teori Bahasa dan Otomata  Implementasi DFA untuk Validasi Format Kode Warna Hexadecimal</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="{{ url_for('static', filename='js/chart-init.js') }}"></script>
+</body>
+</html>

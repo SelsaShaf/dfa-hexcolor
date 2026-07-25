@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cara Penggunaan</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-brand">Validator Hex Color (DFA)</div>
+    <nav class="navbar-links">
+      <a href="{{ url_for('index') }}">Beranda</a>
+      <a href="{{ url_for('dataset') }}">Dataset & Pengujian</a>
+      <a href="{{ url_for('cara_pakai') }}">Cara Penggunaan</a>
+      <a href="{{ url_for('tentang') }}">Tentang</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Cara Penggunaan</h1>
+      <p>Panduan singkat menggunakan aplikasi ini beserta penjelasan format yang dianggap valid.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Langkah-langkah</h2>
+      <ol class="langkah">
+        <li>Buka halaman <strong>Beranda</strong>, lalu ketikkan kode warna pada kolom input, contoh: <code>#3498DB</code>.</li>
+        <li>Status valid/tidak valid akan muncul secara langsung saat mengetik, tanpa perlu menekan tombol apa pun.</li>
+        <li>Jika kode valid, kotak pratinjau warna akan menampilkan warna sesuai kode yang dimasukkan.</li>
+        <li>Diagram state DFA di bawah kolom input akan menyorot state yang sedang aktif sesuai karakter yang diproses, sehingga kamu bisa mengikuti bagaimana DFA bekerja langkah demi langkah.</li>
+        <li>Buka halaman <strong>Dataset & Pengujian</strong> untuk melihat data uji dan menjalankan pengujian otomatis ke seluruh dataset.</li>
+      </ol>
+    </section>
+
+    <section class="panel">
+      <h2>Format yang Dianggap Valid</h2>
+      <ul class="langkah">
+        <li>Diawali tanda pagar <code>#</code></li>
+        <li>Diikuti tepat 6 karakter heksadesimal (kombinasi angka 0-9 dan huruf A-F, huruf besar/kecil sama-sama diterima)</li>
+      </ul>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Contoh Input</th><th>Status</th><th>Alasan</th></tr></thead>
+          <tbody>
+            <tr><td><code>#FFFFFF</code></td><td>Valid</td><td>Diawali # dan diikuti 6 digit hex</td></tr>
+            <tr><td><code>#3498db</code></td><td>Valid</td><td>Huruf kecil tetap diterima sebagai digit hex</td></tr>
+            <tr><td><code>3498DB</code></td><td>Tidak valid</td><td>Tidak diawali tanda #</td></tr>
+            <tr><td><code>#FFF</code></td><td>Tidak valid</td><td>Kurang dari 6 digit</td></tr>
+            <tr><td><code>#FFFFFFF</code></td><td>Tidak valid</td><td>Lebih dari 6 digit</td></tr>
+            <tr><td><code>#GGHHII</code></td><td>Tidak valid</td><td>Mengandung karakter yang bukan heksadesimal</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Pertanyaan Umum</h2>
+      <p><strong>Apakah huruf besar dan kecil dibedakan?</strong><br>
+      Tidak. Baik <code>#3498DB</code> maupun <code>#3498db</code> sama-sama dianggap valid,
+      karena DFA memperlakukan huruf A-F dan a-f sebagai anggota alfabet hex yang sama.</p>
+
+      <p><strong>Apakah format singkat seperti <code>#FFF</code> (3 digit) didukung?</strong><br>
+      Tidak. Implementasi DFA ini hanya mengenali format 6 digit penuh (#RRGGBB), sesuai
+      batasan studi kasus yang ditetapkan.</p>
+
+      <p><strong>Bagaimana jika saya memasukkan spasi atau karakter khusus lain?</strong><br>
+      DFA akan langsung berpindah ke state TRAP begitu menemukan karakter yang bukan bagian
+      dari alfabet yang diizinkan, sehingga hasilnya otomatis tidak valid.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Proyek UAS Teori Bahasa dan Otomata  Implementasi DFA untuk Validasi Format Kode Warna Hexadecimal</p>
+  </footer>
+</body>
+</html>

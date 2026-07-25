@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beranda - Validator Hex Color (DFA)</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-brand">Validator Hex Color (DFA)</div>
+    <nav class="navbar-links">
+      <a href="{{ url_for('index') }}">Beranda</a>
+      <a href="{{ url_for('dataset') }}">Dataset & Pengujian</a>
+      <a href="{{ url_for('cara_pakai') }}">Cara Penggunaan</a>
+      <a href="{{ url_for('tentang') }}">Tentang</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Validasi Format Kode Warna Hexadecimal</h1>
+      <p>Masukkan kode warna dalam format <code>#RRGGBB</code>. Sistem akan memvalidasi
+         menggunakan Deterministic Finite Automaton (DFA) secara langsung saat kamu mengetik
+         atau menempel (paste) kode warna, tanpa perlu menekan tombol apa pun.</p>
+      <a href="{{ url_for('cara_pakai') }}" class="btn-secondary">Lihat Cara Penggunaan</a>
+    </section>
+
+    <section class="panel">
+      <div class="input-group">
+        <label for="input-hex">Kode Warna</label>
+        <input type="text" id="input-hex" placeholder="#3498DB" maxlength="10" autocomplete="off">
+      </div>
+
+      <div class="contoh-chips">
+        <span class="contoh-label">Coba contoh:</span>
+        <button type="button" class="contoh-chip" data-contoh="#3498DB">#3498DB</button>
+        <button type="button" class="contoh-chip" data-contoh="#FF5733">#FF5733</button>
+        <button type="button" class="contoh-chip" data-contoh="#FFF">#FFF</button>
+        <button type="button" class="contoh-chip" data-contoh="3498DB">3498DB</button>
+      </div>
+
+      <div class="hasil-validasi" id="hasil-validasi">
+        <div class="status-box" id="status-box">
+          <span id="status-text">Belum ada input</span>
+        </div>
+        <div class="preview-warna" id="preview-warna"></div>
+      </div>
+
+      <div class="diagram-wrapper">
+        <svg id="diagram-dfa" viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="panah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L9,3 z" fill="var(--border)"></path>
+            </marker>
+          </defs>
+
+          <g stroke="var(--border)" stroke-width="2" fill="none" marker-end="url(#panah)">
+            <line x1="76" y1="100" x2="134" y2="100"></line>
+            <line x1="186" y1="100" x2="244" y2="100"></line>
+            <line x1="296" y1="100" x2="354" y2="100"></line>
+            <line x1="406" y1="100" x2="464" y2="100"></line>
+            <line x1="516" y1="100" x2="574" y2="100"></line>
+            <line x1="626" y1="100" x2="684" y2="100"></line>
+            <line x1="736" y1="100" x2="794" y2="100"></line>
+          </g>
+
+          <circle class="state" id="state-q0" cx="50" cy="100" r="26"></circle>
+          <text x="50" y="105" text-anchor="middle" class="state-label">q0</text>
+          <text x="50" y="60" text-anchor="middle" class="state-caption">awal</text>
+
+          <circle class="state" id="state-q1" cx="160" cy="100" r="26"></circle>
+          <text x="160" y="105" text-anchor="middle" class="state-label">q1</text>
+          <text x="105" y="85" text-anchor="middle" class="edge-label">#</text>
+
+          <circle class="state" id="state-q2" cx="270" cy="100" r="26"></circle>
+          <text x="270" y="105" text-anchor="middle" class="state-label">q2</text>
+          <text x="215" y="85" text-anchor="middle" class="edge-label">hex</text>
+
+          <circle class="state" id="state-q3" cx="380" cy="100" r="26"></circle>
+          <text x="380" y="105" text-anchor="middle" class="state-label">q3</text>
+          <text x="325" y="85" text-anchor="middle" class="edge-label">hex</text>
+
+          <circle class="state" id="state-q4" cx="490" cy="100" r="26"></circle>
+          <text x="490" y="105" text-anchor="middle" class="state-label">q4</text>
+          <text x="435" y="85" text-anchor="middle" class="edge-label">hex</text>
+
+          <circle class="state" id="state-q5" cx="600" cy="100" r="26"></circle>
+          <text x="600" y="105" text-anchor="middle" class="state-label">q5</text>
+          <text x="545" y="85" text-anchor="middle" class="edge-label">hex</text>
+
+          <circle class="state" id="state-q6" cx="710" cy="100" r="26"></circle>
+          <text x="710" y="105" text-anchor="middle" class="state-label">q6</text>
+          <text x="655" y="85" text-anchor="middle" class="edge-label">hex</text>
+
+          <circle class="state accept" id="state-q7" cx="820" cy="100" r="26"></circle>
+          <circle class="state accept-ring" cx="820" cy="100" r="32" fill="none"></circle>
+          <text x="820" y="105" text-anchor="middle" class="state-label">q7</text>
+          <text x="765" y="85" text-anchor="middle" class="edge-label">hex</text>
+          <text x="820" y="60" text-anchor="middle" class="state-caption">diterima</text>
+
+          <circle class="state trap" id="state-qtrap" cx="460" cy="215" r="26"></circle>
+          <text x="460" y="220" text-anchor="middle" class="state-label" style="font-size:12px">qtrap</text>
+          <text x="460" y="180" text-anchor="middle" class="edge-label">selain hex / #</text>
+        </svg>
+      </div>
+
+      <div class="trace-panel">
+        <div class="status-state-panel">
+        <span class="trace-label">State sekarang:</span>
+        <span id="current-state-text" class="trace-log">q0 (awal)</span>
+      </div>
+
+      <div class="legenda">
+        <span class="legenda-judul">Keterangan simbol pada diagram:</span>
+        <div class="legenda-list">
+          <div class="legenda-item"><span class="legenda-dot dot-active"></span> State sedang diproses</div>
+          <div class="legenda-item"><span class="legenda-dot dot-accept"></span> State diterima (valid)</div>
+          <div class="legenda-item"><span class="legenda-dot dot-trap"></span> State jebakan (tidak valid)</div>
+        </div>
+      </div>
+        <span class="trace-label">Jejak transisi:</span>
+        <span id="trace-log" class="trace-log">q0</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Apa itu DFA?</h2>
+      <p>
+        Deterministic Finite Automaton (DFA) adalah salah satu model komputasi dalam teori
+        bahasa dan otomata yang digunakan untuk mengenali apakah sebuah string termasuk dalam
+        suatu bahasa formal tertentu. DFA bekerja dengan membaca string karakter demi karakter,
+        lalu berpindah dari satu keadaan (state) ke keadaan lain berdasarkan aturan transisi
+        yang sudah ditentukan. Jika setelah seluruh karakter dibaca DFA berhenti di salah satu
+        state akhir (accepting state), maka string tersebut dinyatakan diterima atau valid.
+      </p>
+      <p>
+        Secara formal, DFA didefinisikan sebagai 5-tuple (Q, &Sigma;, &delta;, q0, F). Tabel di bawah
+        menunjukkan definisi formal DFA yang diimplementasikan pada aplikasi ini.
+      </p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Komponen</th><th>Keterangan</th></tr></thead>
+          <tbody>
+            <tr><td>Q (himpunan state)</td><td>{q0, q1, q2, q3, q4, q5, q6, q7, qtrap}</td></tr>
+            <tr><td>&Sigma; (alfabet input)</td><td>Karakter '#', digit 0-9, huruf A-F/a-f, dan karakter lain</td></tr>
+            <tr><td>q0 (state awal)</td><td>q0</td></tr>
+            <tr><td>F (state akhir/diterima)</td><td>{q7}</td></tr>
+            <tr><td>&delta; (fungsi transisi)</td><td>Lihat tabel transisi di bawah</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Tabel Transisi</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>State</th><th>Input '#'</th><th>Input hex (0-9, A-F)</th><th>Input lainnya</th></tr></thead>
+          <tbody>
+            <tr><td>q0 (awal)</td><td>q1</td><td>qtrap</td><td>qtrap</td></tr>
+            <tr><td>q1</td><td>qtrap</td><td>q2</td><td>qtrap</td></tr>
+            <tr><td>q2</td><td>qtrap</td><td>q3</td><td>qtrap</td></tr>
+            <tr><td>q3</td><td>qtrap</td><td>q4</td><td>qtrap</td></tr>
+            <tr><td>q4</td><td>qtrap</td><td>q5</td><td>qtrap</td></tr>
+            <tr><td>q5</td><td>qtrap</td><td>q6</td><td>qtrap</td></tr>
+            <tr><td>q6</td><td>qtrap</td><td>q7 (diterima)</td><td>qtrap</td></tr>
+            <tr><td>q7 (diterima)</td><td>qtrap</td><td>qtrap</td><td>qtrap</td></tr>
+            <tr><td>qtrap</td><td>qtrap</td><td>qtrap</td><td>qtrap</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="keterangan">
+        Begitu string mencapai qtrap, tidak ada jalan kembali ke state lain  string
+        otomatis dinyatakan tidak valid meskipun sisa karakter belum selesai dibaca.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Proyek UAS Teori Bahasa dan Otomata Implementasi DFA untuk Validasi Format Kode Warna Hexadecimal</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/dfa.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/diagram.js') }}"></script>
+</body>
+</html>
