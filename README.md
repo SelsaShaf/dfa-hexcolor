@@ -127,7 +127,7 @@ http://127.0.0.1:5000
 ## Tautan
 
 - **Aplikasi Live:** https://www.selsa-validator-hex.my.id/
-- **Video Presentasi (YouTube):**https://youtu.be/Y_jT792hH_c
+- **Video Presentasi (YouTube):** https://youtu.be/Y_jT792hH_c
 - **Dataset:** [Color Names Dataset  Kaggle](https://www.kaggle.com/datasets/avi1023/color-names)
 
 ## Informasi Penulis
